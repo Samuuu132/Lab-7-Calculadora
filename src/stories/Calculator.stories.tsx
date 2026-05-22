@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 import Calculator from '../components/Calculator'
 
 const meta: Meta<typeof Calculator> = {
-    title: 'Calculator/Calculator',
-    component: Calculator
+  title: 'Calculator/Calculator',
+  component: Calculator
 }
 
 export default meta
