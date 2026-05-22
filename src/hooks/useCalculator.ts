@@ -18,9 +18,16 @@ const calculate = (a: number, b: number, op: Operation): number => {
 }
 
 const toDisplay = (result: number): string => {
-  const str = String(result)
+  const str = result.toString()
   const digits = str.replace('.', '').replace('-', '')
-  return digits.length > MAX_DIGITS ? 'ERROR' : str
+  if (digits.length <= MAX_DIGITS) return str
+  if (str.includes('.')) {
+    const [int, dec] = str.split('.')
+    const available = MAX_DIGITS - int.replace('-', '').length
+    if (available <= 0) return 'ERROR'
+    return `${int}.${dec.slice(0, available)}`
+  }
+  return 'ERROR'
 }
 
 export const useCalculator = () => {
