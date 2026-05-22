@@ -1,0 +1,49 @@
+.button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: filter 0.1s ease;
+    background: #d4d4d8;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button:active {
+    filter: brightness(0.85);
+}
+
+.action {
+    background: #5ac8fa;
+    color: white;
+}
+
+.operation {
+    background: #5ac8fa;
+    color: white;
+}
+
+.equals {
+    background: #5ac8fa;
+    color: white;
+}
+
+.wide {
+    width: 136px;
+    border-radius: 32px;
+    justify-content: flex-start;
+    padding-left: 24px;
+}
+
+.equals-wide {
+    width: 100%;
+    border-radius: 32px;
+    background: #5ac8fa;
+    color: white;
+    grid-column: span 2;
+}

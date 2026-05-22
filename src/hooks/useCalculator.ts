@@ -3,14 +3,16 @@ import { useState } from 'react'
 const MAX_DIGITS = 9
 const MAX_VALUE = 999999999
 
-type Operation = '+' | '-' | '*' | null
+export type Operation = '+' | '-' | '*' | '/' | '%' | null
 
-const isError = (value: number): boolean => value < 0 || value > MAX_VALUE
+const checkError = (value: number): boolean => value < 0 || value > MAX_VALUE
 
 const calculate = (a: number, b: number, op: Operation): number => {
     if (op === '+') return a + b
     if (op === '-') return a - b
     if (op === '*') return a * b
+    if (op === '/') return a / b
+    if (op === '%') return a % b
     return b
 }
 
@@ -44,7 +46,7 @@ export const useCalculator = () => {
         const current = parseFloat(display)
         if (firstOperand !== null && !waitingForSecond) {
             const result = calculate(firstOperand, current, operation)
-            if (isError(result)) { setDisplay('ERROR'); return }
+            if (checkError(result)) { setDisplay('ERROR'); return }
             setDisplay(toDisplay(result))
             setFirstOperand(result)
         } else {
@@ -57,7 +59,7 @@ export const useCalculator = () => {
     const handleEquals = () => {
         if (display === 'ERROR' || firstOperand === null) return
         const result = calculate(firstOperand, parseFloat(display), operation)
-        if (isError(result)) { setDisplay('ERROR'); return }
+        if (checkError(result)) { setDisplay('ERROR'); return }
         setDisplay(toDisplay(result))
         setFirstOperand(null)
         setOperation(null)

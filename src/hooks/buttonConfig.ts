@@ -1,7 +1,10 @@
+import type { Operation } from './useCalculator'
+
 type ButtonProps = { l: string; v?: string }
+
 type GridProps = {
     onNumber: (n: string) => void
-    onOperation: (op: '+' | '-' | '*') => void
+    onOperation: (op: Operation) => void
     onEquals: () => void
     onClear: () => void
     onToggleSign: () => void
@@ -13,7 +16,7 @@ export const BUTTONS: ButtonProps[][] = [
     [{ l: '7' }, { l: '8' }, { l: '9' }, { l: '×', v: 'operation' }],
     [{ l: '4' }, { l: '5' }, { l: '6' }, { l: '-', v: 'operation' }],
     [{ l: '1' }, { l: '2' }, { l: '3' }, { l: '+', v: 'operation' }],
-    [{ l: '0', v: 'wide' }, { l: '.' }, { l: '=', v: 'equals' }]
+    [{ l: '0' }, { l: '.' }, { l: '=', v: 'equals-wide' }]
 ]
 
 export const getHandler = (label: string, p: GridProps): (() => void) => {
@@ -25,8 +28,8 @@ export const getHandler = (label: string, p: GridProps): (() => void) => {
         '+': () => p.onOperation('+'),
         '-': () => p.onOperation('-'),
         '×': () => p.onOperation('*'),
-        '÷': () => p.onOperation('*'),
-        '%': () => p.onOperation('*')
+        '÷': () => p.onOperation('/'),
+        '%': () => p.onOperation('%')
     }
     return ops[label] ?? (() => p.onNumber(label))
 }
