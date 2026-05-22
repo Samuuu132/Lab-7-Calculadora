@@ -5,7 +5,8 @@ const MAX_VALUE = 999999999
 
 export type Operation = '+' | '-' | '*' | '/' | '%' | null
 
-const checkError = (value: number): boolean => value < 0 || value > MAX_VALUE
+const isOverflow = (value: number): boolean => value > MAX_VALUE
+const isNegative = (value: number): boolean => value < 0
 
 const calculate = (a: number, b: number, op: Operation): number => {
     if (op === '+') return a + b
@@ -46,7 +47,7 @@ export const useCalculator = () => {
         const current = parseFloat(display)
         if (firstOperand !== null && !waitingForSecond) {
             const result = calculate(firstOperand, current, operation)
-            if (checkError(result)) { setDisplay('ERROR'); return }
+            if (isNegative(result) || isOverflow(result)) { setDisplay('ERROR'); return }
             setDisplay(toDisplay(result))
             setFirstOperand(result)
         } else {
@@ -59,7 +60,7 @@ export const useCalculator = () => {
     const handleEquals = () => {
         if (display === 'ERROR' || firstOperand === null) return
         const result = calculate(firstOperand, parseFloat(display), operation)
-        if (checkError(result)) { setDisplay('ERROR'); return }
+        if (isNegative(result) || isOverflow(result)) { setDisplay('ERROR'); return }
         setDisplay(toDisplay(result))
         setFirstOperand(null)
         setOperation(null)
