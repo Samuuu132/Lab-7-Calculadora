@@ -1,22 +1,44 @@
 import js from '@eslint/js'
-import globals from 'globals'
+import tsParser from '@typescript-eslint/parser'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
 
-export default defineConfig([
-  globalIgnores(['dist']),
+export default [
+  js.configs.recommended,
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-      globals: globals.browser,
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true }
+      }
     },
-  },
-])
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+      react: reactPlugin,
+      'react-hooks': reactHooks
+    },
+    rules: {
+      ...tsPlugin.configs.recommended.rules,
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Punctuator[value=","]',
+          message: 'Commas are not allowed'
+        }
+      ],
+      'max-len': ['error', { code: 120 }],
+      semi: ['error', 'never'],
+      quotes: ['error', 'single'],
+      indent: ['error', 2],
+      'no-trailing-spaces': 'error',
+      'eol-last': ['error', 'always'],
+      'react/react-in-jsx-scope': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn'
+    }
+  }
+]
