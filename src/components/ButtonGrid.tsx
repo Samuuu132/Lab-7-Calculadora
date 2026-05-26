@@ -1,9 +1,10 @@
 import Button from './Button'
 import styles from '../styles/ButtonGrid.module.css'
 import { getHandler, BUTTONS } from '../hooks/buttonConfig'
+import type { Operation } from '../hooks/useCalculator'
 
 type Props = {
-    onNumber: (n: string) => void; onOperation: (op: '+' | '-' | '*') => void
+    onNumber: (n: string) => void; onOperation: (op: Operation) => void
     onEquals: () => void; onClear: () => void
     onToggleSign: () => void; onDecimal: () => void
 }
